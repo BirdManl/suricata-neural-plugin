@@ -1,0 +1,38 @@
+%YAML 1.1
+---
+
+# Включение EVE JSON логов
+outputs:
+  - eve-log:
+      enabled: yes
+      filetype: regular
+      filename: eve.json
+      types:
+        - flow
+        - http
+        - dns
+        - tls
+        - alert
+
+# Настройки flow логов (важно для нейросети!)
+flow:
+  memcap: 128mb
+  hash-size: 65536
+  prealloc: 10000
+  emergency-recovery: 30
+
+# Включение метаданных потока
+default-log-dir: logs/
+
+# Сетевой интерфейс (замените на ваш)
+af-packet:
+  - interface: eth0
+    cluster-id: 99
+    cluster-type: cluster_flow
+    defrag: yes
+
+# Правила (можно оставить пустыми для теста)
+default-rule-path: rules
+
+rule-files:
+  - suricata.rules
